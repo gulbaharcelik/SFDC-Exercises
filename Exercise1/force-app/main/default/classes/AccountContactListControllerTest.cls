@@ -65,7 +65,7 @@ public class AccountContactListControllerTest{
 		System.assertEquals(contacts.size(), 10);
         
         //after previous method
-        System.assertEquals(extension.offset, 30);
+        System.assertEquals(offset, 30);
         //after beginning method
         System.assertEquals(extension.offset, 0);
 

@@ -1,8 +1,9 @@
 public class AccountContactListController extends PagingHelper{
 	public Account account;
-	public String searchText{ get; set; }
-	private List<Contact> contacts;
 
+	public String searchText{ get; set; }
+
+	private List<Contact> contacts;
 	public AccountContactListController(ApexPages.StandardController controller){
 		this.account = (Account)controller.getRecord();
 		if (searchText == null){
@@ -15,7 +16,7 @@ public class AccountContactListController extends PagingHelper{
 
 	public List<Contact> getContacts(){
 		try{
-			
+
 			if (searchText != null && searchText != ''){
 				totalSize = [select count()
 				             from Contact
@@ -41,19 +42,16 @@ public class AccountContactListController extends PagingHelper{
 	public PageReference doContactUpdate(){
 		try{
 			String contactId = Apexpages.currentpage().getParameters().get('contactId');
-			List<Contact> contactList = new List<Contact>();
 			List<Contact> currentPrimaryContacts = [select Id
 			                                        from Contact
 			                                        where Is_Primary_Contact__c = true and AccountId = :account.Id];
 			for (Contact item : currentPrimaryContacts){
 				item.Is_Primary_Contact__c = false;
-				contactList.add(item);
 			}
+			update currentPrimaryContacts;
 
 			Contact newPrimaryInstance = new Contact(Id = contactId, Is_Primary_Contact__c = true);
-			contactList.add(newPrimaryInstance);
-
-			update contactList;
+			update newPrimaryInstance;
 			return null;
 		} catch (Exception e){
 			ApexPages.addMessages(e);
