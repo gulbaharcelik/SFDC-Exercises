@@ -22,10 +22,7 @@ public class AccountOpportunityOverviewTest{
 		}
 		// Verify the expressions are the same
 		System.assertEquals(schedule, ct.CronExpression);
-		System.assertEquals(expected, String.valueOf(ct.NextFireTime));
-		if (Date.today().hours)
-			// Verify the job has not run
-			System.assertEquals(0, ct.TimesTriggered);
+		System.assertEquals(String.valueOf(expected), String.valueOf(ct.NextFireTime));
 		Test.stopTest();
 	}
 

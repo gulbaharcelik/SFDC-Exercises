@@ -75,8 +75,8 @@ public class AccountContactListControllerTest{
 	static void setPrimary(){
 		AccountContactListController extension = makeData();
 		Test.startTest();
-		extension.doContactUpdate();
 		String contactId = Apexpages.currentpage().getParameters().get('contactId');
+		extension.doContactUpdate();
 		String accountId = Apexpages.currentpage().getParameters().get('recordId');
 
 		List<Contact> primaryContacts = [select Id
