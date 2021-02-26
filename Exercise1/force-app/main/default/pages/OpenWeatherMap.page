@@ -1,16 +1,16 @@
 <apex:page standardController="Account" extensions="OpenWeatherMapApiController" title="Open Weather Map">
     <apex:pageBlock title="Weather in {! account.BillingCity}">
         <apex:pageBlockSection columns="2">
-            <apex:pageBlockSectionItem>
-                <apex:outputLabel>Description</apex:outputLabel>
-                <apex:outputText>{!weather.description}</apex:outputText>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Description</apex:outputLabel>
+                <apex:outputText >{!weather.description}</apex:outputText>
             </apex:pageBlockSectionItem>
-            <apex:pageBlockSectionItem>
-                <apex:outputLabel>Temperature</apex:outputLabel>
-                <apex:outputText>{!weather.temp}</apex:outputText>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >Temperature</apex:outputLabel>
+                <apex:outputText >{!weather.temp}</apex:outputText>
             </apex:pageBlockSectionItem>
-            <apex:pageBlockSectionItem>
-                <apex:outputLabel>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel >
                     <div id="icon" style="width: 34%;text-align: right;">
                         <img id="wicon" src="{!weather.iconPath}" alt="Weather icon" />
                     </div>

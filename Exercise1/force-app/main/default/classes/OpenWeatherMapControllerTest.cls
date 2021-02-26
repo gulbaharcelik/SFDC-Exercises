@@ -28,7 +28,7 @@ public class OpenWeatherMapControllerTest{
 	}
 
 	public static OpenWeatherMapApiController makeData(){
-		List<Account> accountList = TestDataFactory.createAccounts(1);
+		List<Account> accountList = TestDataFactory.createAccounts(1, true);
 		Account testAccount = accountList[0];
 		PageReference pageRef = Page.OpenWeatherMap;
 		pageRef.getparameters().put('recordId', testAccount.Id);
