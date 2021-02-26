@@ -37,20 +37,7 @@ public class AccountOpportunityOverviewTest{
 		insert contact;
 
 		Date closeDate = Date.today().addMonths(5);
-		List<Opportunity> opps = new List<Opportunity>();
-
-		for (Integer i = 1; i <= 3; i++){
-			opps.add(new Opportunity(Name = 'Open Opp ' + i, StageName = 'Open', Amount = 111 * i, AccountId = account.Id, CloseDate = closeDate));
-		}
-
-		for (Integer i = 1; i <= 3; i++){
-			opps.add(new Opportunity(Name = 'Closed Won ' + i, StageName = 'Closed Won', Amount = 11 * i, AccountId = account.Id, CloseDate = closeDate));
-		}
-
-		for (Integer i = 1; i <= 3; i++){
-			opps.add(new Opportunity(Name = 'Closed Lost ' + i, StageName = 'Closed Lost', Amount = 11 * i, AccountId = account.Id, CloseDate = closeDate));
-		}
-
-		insert opps;
+		Set<String> stages = new Set<String>{'Open', 'Closed Won', 'Closed Lost'};
+		List<Opportunity> opps = TestDataFactory.createOpportunityByStage(3, stages, account.Id, true);
 	}
 }

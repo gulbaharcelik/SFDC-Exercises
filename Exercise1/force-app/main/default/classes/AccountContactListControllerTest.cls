@@ -6,23 +6,23 @@ public class AccountContactListControllerTest{
 		Test.startTest();
 		List<Contact> contacts = extension.getContacts();
 
-        extension.Next();
-        List<Contact> contacts1 = extension.getContacts();
+		extension.Next();
+		List<Contact> contacts1 = extension.getContacts();
 
-        extension.End();
-        extension.getDisableNext(); // action will automatically disable next when user clicks on beginning.
-        List<Contact> contacts2 = extension.getContacts();
+		extension.End();
+		extension.getDisableNext(); // action will automatically disable next when user clicks on beginning.
+		List<Contact> contacts2 = extension.getContacts();
 
 		Test.stopTest();
 
 		System.assertEquals(extension.getTotalPages(), 3);
-        System.assertEquals(extension.getTotalSize(), 50);
+		System.assertEquals(extension.getTotalSize(), 50);
 
-        //after next
-        System.assertEquals(extension.offset, 40);
+		//after next
+		System.assertEquals(extension.offset, 40);
 
-        //after end
-        System.assertEquals(extension.getPageNumber(), 3);
+		//after end
+		System.assertEquals(extension.getPageNumber(), 3);
 	}
 
 	@isTest
@@ -39,36 +39,35 @@ public class AccountContactListControllerTest{
 		System.assertEquals(contacts.size(), 5);
 		System.assertEquals(extension.getTotalSize(), 5);
 		System.assertEquals(extension.getTotalPages(), 1);
-        System.assertEquals(extension.offset, 0);
+		System.assertEquals(extension.offset, 0);
 	}
 
-    @isTest
+	@isTest
 	static void testOffset(){
 		AccountContactListController extension = makeData();
 		Test.startTest();
-        extension.listSize = 10;
+		extension.listSize = 10;
 		List<Contact> contacts = extension.getContacts();
 
-        extension.offset = 40;
-        List<Contact> contacts1 = extension.getContacts();
+		extension.offset = 40;
+		List<Contact> contacts1 = extension.getContacts();
 
-        extension.Previous();
-        List<Contact> contacts2 = extension.getContacts();
-        Integer offset = extension.offset;
+		extension.Previous();
+		List<Contact> contacts2 = extension.getContacts();
+		Integer offset = extension.offset;
 
-        extension.Beginning();
-        extension.getDisablePrevious(); // action will automatically disable previus when user clicks on beginning.
-        List<Contact> contacts3 = extension.getContacts();
+		extension.Beginning();
+		extension.getDisablePrevious(); // action will automatically disable previus when user clicks on beginning.
+		List<Contact> contacts3 = extension.getContacts();
 
 		Test.stopTest();
-        System.assertEquals(extension.getTotalPages(), 5);
+		System.assertEquals(extension.getTotalPages(), 5);
 		System.assertEquals(contacts.size(), 10);
-        
-        //after previous method
-        System.assertEquals(offset, 30);
-        //after beginning method
-        System.assertEquals(extension.offset, 0);
 
+		//after previous method
+		System.assertEquals(offset, 30);
+		//after beginning method
+		System.assertEquals(extension.offset, 0);
 	}
 
 	@isTest
@@ -84,23 +83,25 @@ public class AccountContactListControllerTest{
 		                                 where Is_Primary_Contact__c = true and AccountId = :accountId];
 
 		System.assertEquals(primaryContacts.size(), 1);
-        Contact temp = primaryContacts[0];
+		Contact temp = primaryContacts[0];
 		System.assertEquals(temp.Id, contactId);
 		Test.stopTest();
 	}
 
 	static AccountContactListController makeData(){
-		Account myaccount = new Account(name = 'Test');
-		insert myaccount;
+		List<Account> accounts = TestDataFactory.createAccounts(1, true);
+		Account myaccount = accounts[0];
 		List<Contact> contactlist = new List<Contact>();
-		for (Integer i = 0; i < 50; i++){
+		for (Integer i = 0; i < 5; i++){
 			Contact contact = new Contact(LastName = 'Last Name ' + i, AccountId = myaccount.Id);
 			if (i < 5){
 				Contact.FirstName = 'Elda';
 			}
 			contactlist.add(contact);
 		}
-        contactlist[1].Is_Primary_Contact__c = true;
+		contactlist[1].Is_Primary_Contact__c = true;
+		List<Contact> factoryContacts = TestDataFactory.createContacts(45, accounts, false, false);
+		contactlist.addAll(factoryContacts);
 		insert contactlist;
 
 		PageReference pageRef = Page.AccountPrimaryContactPage;

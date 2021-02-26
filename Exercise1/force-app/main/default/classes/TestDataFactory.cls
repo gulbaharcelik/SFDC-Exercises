@@ -58,7 +58,6 @@ public class TestDataFactory{
 				contacts.addAll(contactsByAccount);
 			}
 		}
-		insert contacts;
 		return contacts;
 	}
 
@@ -88,7 +87,7 @@ public class TestDataFactory{
 	 * @param Integer count, string accountId, Boolean createPrimaryContact
 	 * @return List<Contact>
 	 */
-	private static List<Contact> processContacts(Integer count, string accountId, Boolean createPrimaryContact){
+	private static List<Contact> processContacts(Integer count, Id accountId, Boolean createPrimaryContact){
 		List<Contact> contactList = new List<Contact>();
 		for (Integer i = 0; i < count; i++ ){
 			Contact temp = new Contact(AccountId = accountId, FirstName = 'TF First ' + i, LastName = 'TF Last ' + i);
@@ -99,5 +98,40 @@ public class TestDataFactory{
 			contactList.add(temp);
 		}
 		return contactList;
+	}
+
+	/*
+	 * @author Gulbahar Çelik
+	 * @date Feb 26 2021
+	 * @name createOpportunityByStage
+	 * @description creates oops by given stages linked with given account, inserts if preferred
+	 * @param Integer count, Set<String> stages, Id accountId, Boolean doInsert
+	 * @return List<Opportunity>
+	 */
+	public static List<Opportunity> createOpportunityByStage(Integer count, Set<String> stages, Id accountId, Boolean doInsert){
+		List<Opportunity> opps = createOpportunityByStage(count, stages, accountId);
+		if (doInsert){
+			insert opps;
+		}
+		return opps;
+	}
+
+	/*
+	 * @author Gulbahar Çelik
+	 * @date Feb 26 2021
+	 * @name createOpportunityByStage
+	 * @description creates oops by given stages linked with given account, no insert operation
+	 * @param Integer count, Set<String> stages, Id accountId
+	 * @return List<Opportunity>
+	 */
+	public static List<Opportunity> createOpportunityByStage(Integer count, Set<String> stages, Id accountId){
+		List<Opportunity> opps = new List<Opportunity>();
+		Date closeDate = Date.today().addMonths(5);
+		for (String stage : stages){
+			for (Integer i = 1; i <= count; i++){
+				opps.Add(new Opportunity(Name = stage + i, StageName = stage, Amount = 11 * i, AccountId = accountId, CloseDate = closeDate));
+			}
+		}
+		return opps;
 	}
 }
